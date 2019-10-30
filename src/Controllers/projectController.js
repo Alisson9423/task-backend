@@ -8,8 +8,8 @@ module.exports = {
         try {
             const project = await Project.create({
                 ...req.body, user: req.userId 
-            });
-
+            }).then(project => Project.findById(project._id).populate('user'));
+            
             return res.send({ project });
         } catch(err) {
             
