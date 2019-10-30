@@ -6,7 +6,10 @@ const Task = require('../Models/Task')
 module.exports = {
     async store(req, res) {
         try {
-            const project = await Project.create({...req.body, user: req.userId });
+            const project = await Project.create({
+                ...req.body, user: req.userId 
+            });
+
             return res.send({ project });
         } catch(err) {
             
@@ -15,16 +18,15 @@ module.exports = {
     },
 
     async update(req, res) {
-
         try {
             const project = await Project.findByIdAndUpdate(req.params.projectId, {
-                ...req.body,
-            }, { new: true }).then(project => Project.findById(req.params.projectId).populate('user'))
-
-            return res.send({ project })
-
-        } catch {
-            return res.status(400).send({ erro: 'Erro ao criar novo Projeto' })
+                    ...req.body,
+                }, { new: true }).then(project => Project.findById(req.params.projectId).populate('user'));
+                
+            return res.send({ project });
+        } catch(err) {
+            
+            return res.status(400).send({ erro: 'Erro ao atualizar novo Projeto' });
         }
     },
 
