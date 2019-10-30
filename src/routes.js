@@ -38,6 +38,7 @@ routes.use((req, res, next) => {
     })
 
     routes.post('/projects', Projects.store)
+    routes.put('/projects/:projectId', Projects.update)
     routes.get('/projects', Projects.show)
     routes.get('/projects/:projectId', Projects.findUser)
     routes.delete('/projects/:projectId', Projects.remove)

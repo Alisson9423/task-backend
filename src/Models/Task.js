@@ -12,6 +12,11 @@ const TaskSchema = new mongoose.Schema({
         require: true,
     },
 
+    description: {
+        type: String,
+        require: true,
+    },
+
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

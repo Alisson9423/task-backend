@@ -14,6 +14,20 @@ module.exports = {
         }
     },
 
+    async update(req, res) {
+
+        try {
+            const project = await Project.findByIdAndUpdate(req.params.projectId, {
+                ...req.body,
+            }, { new: true }).then(project => Project.findById(req.params.projectId).populate('user'))
+
+            return res.send({ project })
+
+        } catch {
+            return res.status(400).send({ erro: 'Erro ao criar novo Projeto' })
+        }
+    },
+
     async show(req, res) {
         try {
             const projects = await Project.find({ user: req.userId }).populate('user');
