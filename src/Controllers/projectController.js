@@ -6,11 +6,11 @@ const Task = require('../Models/Task')
 module.exports = {
     async store(req, res) {
         try {
-            const project = await Project.create({...req.body, user: req.userId })
-            return res.send({ project })
-
-        } catch {
-            return res.status(400).send({ erro: 'Erro ao criar novo Projeto' })
+            const project = await Project.create({...req.body, user: req.userId });
+            return res.send({ project });
+        } catch(err) {
+            
+            return res.status(400).send({ erro: 'Erro ao criar novo Projeto' });
         }
     },
 
@@ -34,7 +34,7 @@ module.exports = {
 
             return res.send(projects);
 
-        } catch {
+        } catch(err) {
             return res.status(400).send({ erro: 'Erro ao carregar Projetos' })
         }
     },
@@ -45,7 +45,7 @@ module.exports = {
 
             return res.send(project);
 
-        } catch {
+        } catch(err) {
             return res.status(400).send({ erro: 'Erro ao carregar Projeto' })
         }
     },
@@ -55,7 +55,7 @@ module.exports = {
             await Project.findByIdAndRemove(req.params.projectId);
             return res.send()
 
-        } catch {
+        } catch(err) {
             return res.status(400).send({ erro: 'Erro ao deletar Projeto' })
         }
     }
