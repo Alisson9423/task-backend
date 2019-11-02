@@ -4,6 +4,8 @@ const authConfig = require('./config/auth.json')
 
 const AuthController = require('./Controllers/AuthController')
 const Projects = require('./Controllers/projectController')
+const Task = require('./Controllers/TaskController')
+const User = require('./Controllers/UserController')
 
 const routes = express.Router()
 
@@ -37,11 +39,22 @@ routes.use((req, res, next) => {
         return next()
     })
 
+    //Projects 
+
     routes.post('/projects', Projects.store)
     routes.put('/projects/:projectId', Projects.update)
     routes.get('/projects', Projects.show)
+    routes.get('/list', Projects.list)
     routes.get('/projects/:projectId', Projects.findUser)
     routes.delete('/projects/:projectId', Projects.remove)
+
+    //Task
+    routes.post('/task', Task.store)
+    routes.get('/task', Task.list)
+
+    //Users
+
+    routes.get('/users', User.show)
 })
 
 

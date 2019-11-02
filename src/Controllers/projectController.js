@@ -7,12 +7,13 @@ module.exports = {
     async store(req, res) {
         try {
             const project = await Project.create({
-                ...req.body, user: req.userId 
+                ...req.body,
+                user: req.userId
             }).then(project => Project.findById(project._id).populate('user'));
-            
+
             return res.send({ project });
-        } catch(err) {
-            
+        } catch (err) {
+
             return res.status(400).send({ erro: 'Erro ao criar novo Projeto' });
         }
     },
@@ -20,12 +21,12 @@ module.exports = {
     async update(req, res) {
         try {
             const project = await Project.findByIdAndUpdate(req.params.projectId, {
-                    ...req.body,
-                }, { new: true }).then(project => Project.findById(req.params.projectId).populate('user'));
-                
+                ...req.body,
+            }, { new: true }).then(project => Project.findById(req.params.projectId).populate('user'));
+
             return res.send({ project });
-        } catch(err) {
-            
+        } catch (err) {
+
             return res.status(400).send({ erro: 'Erro ao atualizar novo Projeto' });
         }
     },
@@ -36,7 +37,18 @@ module.exports = {
 
             return res.send(projects);
 
-        } catch(err) {
+        } catch (err) {
+            return res.status(400).send({ erro: 'Erro ao carregar Projetos' })
+        }
+    },
+
+    async list(req, res) {
+        try {
+            const projects = await Project.find()
+
+            return res.send(projects);
+
+        } catch (err) {
             return res.status(400).send({ erro: 'Erro ao carregar Projetos' })
         }
     },
@@ -47,7 +59,7 @@ module.exports = {
 
             return res.send(project);
 
-        } catch(err) {
+        } catch (err) {
             return res.status(400).send({ erro: 'Erro ao carregar Projeto' })
         }
     },
@@ -57,7 +69,7 @@ module.exports = {
             await Project.findByIdAndRemove(req.params.projectId);
             return res.send()
 
-        } catch(err) {
+        } catch (err) {
             return res.status(400).send({ erro: 'Erro ao deletar Projeto' })
         }
     }
