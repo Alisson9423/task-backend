@@ -13,7 +13,7 @@ module.exports = {
                 description,
                 assignedTo: userId,
                 project: projectId
-            }).then(task => task = Task.find({ assignedTo: req.userId }))
+            }).then(task => Task.find({ assignedTo: req.userId }).populate("project"))
 
             return res.send({ task });
         } catch (err) {
@@ -23,11 +23,12 @@ module.exports = {
 
     async list(req, res) {
         try {
-            const task = await Task.find({ assignedTo: req.userId })
+            const task = await Task.find({ assignedTo: req.userId }).populate("project")
 
             return res.send(task);
 
         } catch (err) {
+            console.log(err)
             return res.status(400).send({ erro: 'Erro ao carregar Tarefas' })
         }
     },
