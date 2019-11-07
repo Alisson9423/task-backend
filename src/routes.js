@@ -51,6 +51,7 @@ routes.use((req, res, next) => {
     //Task
     routes.post('/task', Task.store)
     routes.get('/task', Task.list)
+    routes.put('/task/:taskId', Task.update)
 
     //Users
 

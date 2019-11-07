@@ -35,13 +35,14 @@ module.exports = {
 
     async update(req, res) {
         try {
-            const project = await Project.findByIdAndUpdate(req.params.projectId, {
+            const task = await Task.findByIdAndUpdate(req.params.taskId, {
                 ...req.body,
-            }, { new: true }).then(project => Project.findById(req.params.projectId).populate('user'));
+            }, { new: true }).then(task => Task.find({ assignedTo: req.userId }).populate("project"));
 
-            return res.send({ project });
+            return res.send({ task });
         } catch (err) {
 
+            console.log(err)
             return res.status(400).send({ erro: 'Erro ao atualizar novo Projeto' });
         }
     },
