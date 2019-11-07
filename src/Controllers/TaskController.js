@@ -13,10 +13,11 @@ module.exports = {
                 description,
                 assignedTo: userId,
                 project: projectId
-            }).then(task => Task.find({ assignedTo: req.userId }).populate("project"))
+            }).then(task => Task.find({ assignedTo: req.userId, completed: false }).populate("project"))
 
             return res.send({ task });
         } catch (err) {
+            console.log(err)
             return res.status(400).send({ erro: 'Erro ao criar nova Tarefa' });
         }
     },
@@ -37,7 +38,7 @@ module.exports = {
         try {
             const task = await Task.findByIdAndUpdate(req.params.taskId, {
                 ...req.body,
-            }, { new: true }).then(task => Task.find({ assignedTo: req.userId }).populate("project"));
+            }, { new: true }).then(task => Task.find({ assignedTo: req.userId, completed: false }).populate("project"));
 
             return res.send({ task });
         } catch (err) {
