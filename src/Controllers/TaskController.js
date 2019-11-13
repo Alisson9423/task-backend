@@ -5,6 +5,7 @@ const Task = require('../Models/Task')
 
 module.exports = {
     async store(req, res) {
+
         const { title, description, projectId, userId } = req.body
 
         try {
@@ -23,6 +24,7 @@ module.exports = {
     },
 
     async list(req, res) {
+        console.log(req)
         try {
             const task = await Task.find({ assignedTo: req.userId }).populate("project")
 
