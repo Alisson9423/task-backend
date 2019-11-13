@@ -8,7 +8,12 @@ module.exports = {
 
         const { title, description, projectId, userId } = req.body
 
+        // 
+
+
+
         try {
+
             const task = await Task.create({
                 title,
                 description,
@@ -16,7 +21,16 @@ module.exports = {
                 project: projectId
             }).then(task => Task.find({ assignedTo: req.userId, completed: false }).populate("project"))
 
-            return res.send({ task });
+            if (userId == req.userId) {
+                return res.send({ task });
+            } else {
+                const teste = await Task.find({ assignedTo: userId, completed: false }).populate("project")
+                req.io.emit('teste', teste)
+
+                return res.send({ task });
+            }
+
+
         } catch (err) {
             console.log(err)
             return res.status(400).send({ erro: 'Erro ao criar nova Tarefa' });
@@ -24,7 +38,7 @@ module.exports = {
     },
 
     async list(req, res) {
-        console.log(req)
+
         try {
             const task = await Task.find({ assignedTo: req.userId }).populate("project")
 
