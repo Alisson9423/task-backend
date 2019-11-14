@@ -24,8 +24,8 @@ module.exports = {
             if (userId == req.userId) {
                 return res.send({ task });
             } else {
-                const teste = await Task.find({ assignedTo: userId, completed: false }).populate("project")
-                req.io.emit('teste', teste)
+                const taskUser = await Task.find({ assignedTo: userId, completed: false }).populate("project")
+                req.io.emit('tasks', taskUser)
 
                 return res.send({ task });
             }
