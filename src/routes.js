@@ -15,7 +15,7 @@ routes.post('/authenticate', AuthController.authenticate)
 routes.use((req, res, next) => {
 
     const authHeader = req.headers.authorization
-    return res.status(401).send({ error: 'O token Não Foi Informado' })
+
 
     if (!authHeader) {
         return res.status(401).send({ error: 'O token Não Foi Informado' })
